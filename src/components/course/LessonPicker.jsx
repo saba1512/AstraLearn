@@ -36,18 +36,18 @@ function LessonPicker({ activeLesson, lessons, onChange, topicLabel }) {
   }
 
   return (
-    <div ref={pickerRef} className="relative min-w-0">
-      <p className="mb-3 text-sm font-black uppercase tracking-wide text-slate-500">{topicLabel}</p>
+    <div ref={pickerRef} className="min-w-0 self-start">
+      <p className="mb-2 text-xs font-black uppercase tracking-wide text-slate-500 sm:mb-3 sm:text-sm">{topicLabel}</p>
 
       <button
         type="button"
         aria-expanded={isOpen}
         onClick={() => setIsOpen((value) => !value)}
-        className="flex w-full min-w-0 items-start justify-between gap-3 rounded-xl border border-slate-200 bg-white px-4 py-4 text-left shadow-sm transition hover:border-blue-300 hover:bg-blue-50/50"
+        className="flex w-full min-w-0 items-start justify-between gap-3 rounded-xl border border-slate-200 bg-white px-3 py-3 text-left shadow-sm transition hover:border-blue-300 hover:bg-blue-50/50 sm:px-4 sm:py-4"
       >
         <span className="min-w-0">
           <span className="block text-sm font-bold text-blue-700">{activeLesson.title}</span>
-          <span className="mt-1 block text-base font-black leading-6 text-slate-950">
+          <span className="mt-1 block text-sm font-black leading-6 text-slate-950 sm:text-base">
             {activeLesson.question}
           </span>
         </span>
@@ -61,8 +61,8 @@ function LessonPicker({ activeLesson, lessons, onChange, topicLabel }) {
       </button>
 
       {isOpen ? (
-        <div className="absolute left-0 right-0 top-[calc(100%+0.5rem)] z-30 overflow-hidden rounded-xl border border-slate-200 bg-white shadow-2xl">
-          <label className="flex items-center gap-2 border-b border-slate-100 px-4 py-3">
+        <div className="lesson-picker-menu mt-3 overflow-hidden rounded-xl border border-slate-200 bg-white shadow-xl">
+          <label className="flex items-center gap-2 border-b border-slate-100 px-3 py-3 sm:px-4">
             <Search size={18} className="text-slate-400" />
             <input
               value={query}
@@ -73,7 +73,7 @@ function LessonPicker({ activeLesson, lessons, onChange, topicLabel }) {
             />
           </label>
 
-          <div className="max-h-72 overflow-y-auto p-2">
+          <div className="max-h-64 overflow-y-auto p-2 sm:max-h-72">
             {filteredLessons.map((lesson) => {
               const isActive = lesson.id === activeLesson.id
 
@@ -83,7 +83,7 @@ function LessonPicker({ activeLesson, lessons, onChange, topicLabel }) {
                   type="button"
                   onClick={() => handleSelect(lesson.id)}
                   className={[
-                    'flex w-full items-start gap-3 rounded-lg px-3 py-3 text-left transition',
+                    'flex w-full items-start gap-2 rounded-lg px-2.5 py-3 text-left transition sm:gap-3 sm:px-3',
                     isActive ? 'bg-blue-600 text-white' : 'text-slate-700 hover:bg-slate-100',
                   ].join(' ')}
                 >

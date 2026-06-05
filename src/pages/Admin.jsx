@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react'
 import { Edit3, LockKeyhole, Plus, Save, Trash2 } from 'lucide-react'
+import { readStorageText, writeStorageText } from '../utils/storage'
 
 const emptyLesson = {
   answer: '',
@@ -81,7 +82,7 @@ const adminCopy = {
 function Admin({ actions, adminLessons, courses, language }) {
   const copy = adminCopy[language] ?? adminCopy.ka
   const [password, setPassword] = useState(() => {
-    return window.localStorage.getItem('astralearn-admin-password') || 'admin123'
+    return readStorageText('astralearn-admin-password', 'admin123')
   })
   const [loginPassword, setLoginPassword] = useState('')
   const [isUnlocked, setIsUnlocked] = useState(() => {
@@ -152,7 +153,7 @@ function Admin({ actions, adminLessons, courses, language }) {
 
     if (!newPassword.trim()) return
 
-    window.localStorage.setItem('astralearn-admin-password', newPassword)
+    writeStorageText('astralearn-admin-password', newPassword)
     setPassword(newPassword)
     setNewPassword('')
   }

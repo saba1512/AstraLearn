@@ -1,21 +1,18 @@
 import { useEffect, useMemo, useState } from 'react'
+import { readStorage, writeStorage } from '../utils/storage'
 
 const STORAGE_KEY = 'astralearn-learning-state'
 
 const initialState = {
   completed: {},
   favorites: {},
+  lastLessonByCourse: {},
   notes: {},
   quiz: {},
 }
 
 function readLearningState() {
-  try {
-    const saved = window.localStorage.getItem(STORAGE_KEY)
-    return saved ? { ...initialState, ...JSON.parse(saved) } : initialState
-  } catch {
-    return initialState
-  }
+  return { ...initialState, ...readStorage(STORAGE_KEY, initialState) }
 }
 
 function lessonKey(courseSlug, lessonId) {
@@ -26,7 +23,7 @@ export function useLearningState(courses) {
   const [learningState, setLearningState] = useState(readLearningState)
 
   useEffect(() => {
-    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(learningState))
+    writeStorage(STORAGE_KEY, learningState)
   }, [learningState])
 
   const courseStats = useMemo(() => {
@@ -54,8 +51,14 @@ export function useLearningState(courses) {
       const nextBucket = { ...current[bucket] }
 
       if (value === '' || value === false || value === null) {
+        if (!Object.prototype.hasOwnProperty.call(nextBucket, key)) {
+          return current
+        }
         delete nextBucket[key]
       } else {
+        if (nextBucket[key] === value) {
+          return current
+        }
         nextBucket[key] = value
       }
 
@@ -69,6 +72,8 @@ export function useLearningState(courses) {
     learningState,
     setCompleted: (key, value) => updateBucket('completed', key, value),
     setFavorite: (key, value) => updateBucket('favorites', key, value),
+    setLastLesson: (courseSlug, lessonId) =>
+      updateBucket('lastLessonByCourse', courseSlug, lessonId),
     setNote: (key, value) => updateBucket('notes', key, value),
     setQuizAnswer: (key, value) => updateBucket('quiz', key, value),
   }

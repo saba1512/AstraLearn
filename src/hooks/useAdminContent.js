@@ -1,14 +1,10 @@
 import { useEffect, useMemo, useState } from 'react'
+import { readStorage, writeStorage } from '../utils/storage'
 
 const STORAGE_KEY = 'astralearn-admin-lessons'
 
 function readAdminLessons() {
-  try {
-    const saved = window.localStorage.getItem(STORAGE_KEY)
-    return saved ? JSON.parse(saved) : {}
-  } catch {
-    return {}
-  }
+  return readStorage(STORAGE_KEY, {})
 }
 
 function normalizeLesson(lesson) {
@@ -45,7 +41,7 @@ export function useAdminContent() {
   const [adminLessons, setAdminLessons] = useState(readAdminLessons)
 
   useEffect(() => {
-    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(adminLessons))
+    writeStorage(STORAGE_KEY, adminLessons)
   }, [adminLessons])
 
   const actions = useMemo(

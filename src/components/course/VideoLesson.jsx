@@ -41,21 +41,21 @@ function VideoLesson({
   const showForm = isEditing || !hasVideo
 
   return (
-    <article className="glass-panel rounded-2xl p-5">
+    <article className="glass-panel rounded-2xl p-4 sm:p-5">
       <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
         <div className="flex items-center gap-3">
-          <span className="grid size-10 place-items-center rounded-lg bg-orange-100 text-orange-700">
+          <span className="grid size-10 shrink-0 place-items-center rounded-lg bg-orange-100 text-orange-700">
             <Video size={20} />
           </span>
-          <h3 className="text-xl font-black text-slate-950">{copy.videoTitle}</h3>
+          <h3 className="text-lg font-black text-slate-950 sm:text-xl">{copy.videoTitle}</h3>
         </div>
 
         {hasVideo ? (
-          <div className="flex flex-wrap gap-2">
+          <div className="grid w-full grid-cols-2 gap-2 sm:flex sm:w-auto sm:flex-wrap">
             <button
               type="button"
               onClick={() => setIsEditing((value) => !value)}
-              className="inline-flex items-center gap-2 rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm font-black text-slate-700 transition hover:border-blue-200 hover:bg-blue-50 hover:text-blue-700"
+              className="inline-flex items-center justify-center gap-2 rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm font-black text-slate-700 transition hover:border-blue-200 hover:bg-blue-50 hover:text-blue-700"
             >
               {isEditing ? <Check size={16} /> : <Pencil size={16} />}
               {isEditing ? text.done : text.edit}
@@ -63,7 +63,7 @@ function VideoLesson({
             <button
               type="button"
               onClick={onVideoDelete}
-              className="inline-flex items-center gap-2 rounded-lg border border-rose-200 bg-rose-50 px-3 py-2 text-sm font-black text-rose-700 transition hover:bg-rose-100"
+              className="inline-flex items-center justify-center gap-2 rounded-lg border border-rose-200 bg-rose-50 px-3 py-2 text-sm font-black text-rose-700 transition hover:bg-rose-100"
             >
               <Trash2 size={16} />
               {text.delete}
@@ -73,7 +73,7 @@ function VideoLesson({
       </div>
 
       {showForm ? (
-        <div className="mb-4 rounded-xl border border-slate-200 bg-white p-4">
+        <div className="mb-4 rounded-xl border border-slate-200 bg-white p-3 sm:p-4">
           {!hasVideo ? (
             <div className="mb-3 inline-flex items-center gap-2 rounded-lg bg-blue-50 px-3 py-2 text-sm font-black text-blue-700">
               <Plus size={16} />
@@ -110,7 +110,7 @@ function VideoLesson({
       ) : null}
 
       {lesson.videoTitle && !showForm ? (
-        <h4 className="mb-3 rounded-lg bg-slate-950 px-4 py-3 text-base font-black text-white">
+        <h4 className="mb-3 rounded-lg bg-slate-950 px-4 py-3 text-sm font-black text-white sm:text-base">
           {lesson.videoTitle}
         </h4>
       ) : null}

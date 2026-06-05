@@ -3,6 +3,7 @@ import { Route, Routes } from 'react-router-dom'
 import ScrollToTop from './components/common/ScrollToTop'
 import Footer from './components/layout/Footer'
 import Header from './components/layout/Header'
+import MobileDock from './components/layout/MobileDock'
 import Home from './pages/Home'
 import Contact from './pages/Contact'
 import CoursePage from './pages/CoursePage'
@@ -11,10 +12,11 @@ import { getCourses, getFeaturedQuestions, uiCopy } from './data/courses'
 import Admin from './pages/Admin'
 import { mergeAdminLessons, useAdminContent } from './hooks/useAdminContent'
 import { useLearningState } from './hooks/useLearningState'
+import { readStorageText, writeStorageText } from './utils/storage'
 
 function App() {
   const [language, setLanguage] = useState(() => {
-    const savedLanguage = window.localStorage.getItem('astralearn-language')
+    const savedLanguage = readStorageText('astralearn-language')
     return savedLanguage === 'en' ? 'en' : 'ka'
   })
   const copy = uiCopy[language]
@@ -27,22 +29,22 @@ function App() {
   const featuredQuestions = useMemo(() => getFeaturedQuestions(language), [language])
   const learning = useLearningState(courses)
   const [theme, setTheme] = useState(() => {
-    const savedTheme = window.localStorage.getItem('astralearn-theme')
+    const savedTheme = readStorageText('astralearn-theme')
     return savedTheme === 'dark' ? 'dark' : 'light'
   })
 
   useEffect(() => {
-    window.localStorage.setItem('astralearn-language', language)
+    writeStorageText('astralearn-language', language)
     document.documentElement.lang = language
   }, [language])
 
   useEffect(() => {
-    window.localStorage.setItem('astralearn-theme', theme)
+    writeStorageText('astralearn-theme', theme)
     document.documentElement.dataset.theme = theme
   }, [theme])
 
   return (
-    <div className="app-shell">
+    <div className="app-shell pb-20 lg:pb-0">
       <Header
         copy={copy.header}
         courses={courses}
@@ -95,6 +97,7 @@ function App() {
         </Routes>
       </main>
       <Footer courses={courses} language={language} />
+      <MobileDock courses={courses} language={language} />
     </div>
   )
 }

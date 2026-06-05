@@ -95,46 +95,59 @@ function Home({ copy, courseCopy, courseStats, courses, featuredQuestions, learn
     <>
       <section
         ref={heroRef}
-        className="mx-auto grid max-w-7xl gap-8 px-4 py-8 sm:px-6 md:py-12 lg:grid-cols-[1.02fr_0.98fr] lg:px-8"
+        className="mx-auto grid max-w-7xl gap-5 px-4 py-5 sm:gap-8 sm:px-6 sm:py-8 md:py-12 lg:grid-cols-[1.02fr_0.98fr] lg:px-8"
       >
         <div data-gsap="hero-copy" className="flex flex-col justify-center">
-          <span className="mb-5 inline-flex w-fit items-center gap-2 rounded-full border border-blue-200 bg-blue-50 px-3 py-1 text-sm font-bold text-blue-800">
+          <span className="mb-4 inline-flex w-fit items-center gap-2 rounded-full border border-blue-200 bg-blue-50 px-3 py-1 text-xs font-bold text-blue-800 sm:mb-5 sm:text-sm">
             <Sparkles size={16} />
             {copy.eyebrow}
           </span>
-          <h1 className="max-w-3xl text-3xl font-black leading-tight text-slate-950 sm:text-5xl lg:text-6xl">
+          <h1 className="max-w-3xl text-[2rem] font-black leading-tight text-slate-950 sm:text-5xl lg:text-6xl">
             {copy.title}
           </h1>
-          <p className="mt-5 max-w-2xl text-base leading-8 text-slate-600 sm:text-lg">
+          <p className="mt-4 max-w-2xl text-[0.95rem] leading-7 text-slate-600 sm:mt-5 sm:text-lg sm:leading-8">
             {copy.body}
           </p>
 
-          <div className="mt-7 flex flex-col gap-3 sm:flex-row">
+          <div className="mt-5 flex flex-col gap-3 sm:mt-7 sm:flex-row">
             <Link
               to="/course/python"
-              className="inline-flex items-center justify-center gap-2 rounded-lg bg-blue-600 px-5 py-3 font-bold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-blue-700"
+              className="inline-flex items-center justify-center gap-2 rounded-lg bg-blue-600 px-5 py-3 text-sm font-bold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-blue-700 sm:text-base"
             >
               <Code2 size={19} />
               {copy.primaryCta}
             </Link>
             <a
               href="#courses"
-              className="inline-flex items-center justify-center gap-2 rounded-lg border border-orange-200 bg-white px-5 py-3 font-bold text-slate-900 transition hover:-translate-y-0.5 hover:border-orange-300 hover:bg-orange-50"
+              className="inline-flex items-center justify-center gap-2 rounded-lg border border-orange-200 bg-white px-5 py-3 text-sm font-bold text-slate-900 transition hover:-translate-y-0.5 hover:border-orange-300 hover:bg-orange-50 sm:text-base"
             >
               <BookOpen size={19} />
               {copy.secondaryCta}
             </a>
           </div>
 
-          <div className="mt-8 grid gap-3 sm:grid-cols-3">
+          <div className="mt-5 flex gap-2 overflow-x-auto pb-1 sm:hidden">
+            {topicChips.slice(0, 4).map((topic) => (
+              <button
+                key={topic}
+                type="button"
+                onClick={() => setQuery(topic)}
+                className="shrink-0 rounded-full border border-slate-200 bg-white px-3 py-2 text-xs font-black text-slate-700 shadow-sm"
+              >
+                {topic}
+              </button>
+            ))}
+          </div>
+
+          <div className="mt-6 grid grid-cols-3 gap-2 sm:mt-8 sm:gap-3">
             {copy.metrics.map(([value, label]) => (
               <div
                 key={label}
                 data-gsap="metric"
-                className="rounded-lg border border-slate-200 bg-white/80 p-4 text-center shadow-sm"
+                className="rounded-lg border border-slate-200 bg-white/80 p-3 text-center shadow-sm sm:p-4"
               >
-                <div className="text-2xl font-black text-slate-950">{value}</div>
-                <div className="mt-1 text-xs font-bold uppercase text-slate-500">
+                <div className="text-lg font-black text-slate-950 sm:text-2xl">{value}</div>
+                <div className="mt-1 text-[0.62rem] font-bold uppercase leading-4 text-slate-500 sm:text-xs">
                   {label}
                 </div>
               </div>
@@ -142,10 +155,10 @@ function Home({ copy, courseCopy, courseStats, courses, featuredQuestions, learn
           </div>
         </div>
 
-        <div data-gsap="hero-visual" className="glass-panel relative min-w-0 overflow-hidden rounded-2xl p-4 sm:p-5">
+        <div data-gsap="hero-visual" className="glass-panel relative min-w-0 overflow-hidden rounded-2xl p-3 sm:p-5">
           <div className="absolute inset-x-0 top-0 h-2 bg-gradient-to-r from-blue-500 via-orange-400 to-emerald-400" />
           <figure className="overflow-hidden rounded-xl bg-slate-950">
-            <picture className="block aspect-[16/10]">
+            <picture className="block aspect-[16/9] sm:aspect-[16/10]">
               <img
                 src={heroImg}
                 alt="Student learning programming on a laptop"
@@ -154,7 +167,7 @@ function Home({ copy, courseCopy, courseStats, courses, featuredQuestions, learn
             </picture>
           </figure>
 
-          <div className="mt-4 grid gap-4 xl:grid-cols-[1.05fr_0.95fr]">
+          <div className="mt-4 hidden gap-4 sm:grid xl:grid-cols-[1.05fr_0.95fr]">
             <div className="code-window overflow-hidden rounded-xl border border-white/10 shadow-sm">
               <div className="flex items-center gap-2 border-b border-white/10 px-4 py-3">
                 <span className="size-2.5 rounded-full bg-rose-400" />
